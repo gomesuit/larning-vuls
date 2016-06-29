@@ -42,11 +42,10 @@ user    =       "vagrant"
 keyPath =       "/home/vagrant/.ssh/id_rsa"
 EOF
 
-su - vagrant
-ssh-keygen -t rsa -N "" -f .ssh/id_rsa
-cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-chmod 600 ~/.ssh/authorized_keys
-exit
+ssh-keygen -t rsa -N "" -f /home/vagrant/.ssh/id_rsa
+cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
+chown vagrant.vagrant -R /home/vagrant/.ssh
+chmod 600 /home/vagrant/.ssh/authorized_keys
 
 cd /root/vuls
 go get github.com/kotakanbe/go-cve-dictionary
@@ -57,7 +56,7 @@ go-cve-dictionary fetchjvn -week
 go get github.com/future-architect/vuls
 vuls prepare
 
-vuls scan -cve-dictionary-dbpath=/root/vuls/cve.sqlite3
+#vuls scan -cve-dictionary-dbpath=/root/vuls/cve.sqlite3
 #vuls scan -lang=ja
 
 #vuls tui
