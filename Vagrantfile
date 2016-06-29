@@ -15,6 +15,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.hostname = _HOSTNAME
     host.vm.network "private_network", ip: _PRIVATE_IP_ADDRESS
     host.vm.provision :shell, path: "stop-security.sh"
+    host.vm.provision :shell, path: "set-sshkey.sh"
+    host.vm.provision :shell, path: "install-golang.sh"
     host.vm.provision :shell, path: "install-vuls.sh"
   end
 
