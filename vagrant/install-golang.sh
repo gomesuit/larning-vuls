@@ -1,22 +1,18 @@
-#!/bin/sh
+#!/bin/bash -ex
 
 yum install -y wget
-wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz
-tar -C /usr/local -xzf go1.6.2.linux-amd64.tar.gz
+wget https://dl.google.com/go/go1.10.1.linux-amd64.tar.gz
+tar -C /usr/local -xzf go1.10.1.linux-amd64.tar.gz
 
-tee /etc/profile.d/goenv.sh <<-EOF
-export GOROOT=/usr/local/go
-export GOPATH=\$HOME/go
-export PATH=\$PATH:\$GOROOT/bin:\$GOPATH/bin
-EOF
+cp /vagrant/settings/goenv.sh /etc/profile.d/goenv.sh
 
 source /etc/profile.d/goenv.sh
 
 tee /root/hello.go <<-EOF
 package main
- 
+
 import "fmt"
- 
+
 func main() {
     fmt.Printf("hello world!!!\n")
 }

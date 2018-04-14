@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash -ex
 
 yum install -y sqlite git gcc
 
@@ -18,16 +18,19 @@ EOF
 
 # install go-cve-dictionary
 go get github.com/kotakanbe/go-cve-dictionary
+# for i in `seq 2002 $(date +"%Y")`; do go-cve-dictionary fetchnvd -years $i; done
+# for i in `seq 1998 $(date +"%Y")`; do go-cve-dictionary fetchjvn -years $i; done
+for i in `seq 2018 $(date +"%Y")`; do go-cve-dictionary fetchnvd -years $i; done
+for i in `seq 2018 $(date +"%Y")`; do go-cve-dictionary fetchjvn -years $i; done
+
+go get github.com/kotakanbe/goval-dictionary
+
+goval-dictionary fetch-redhat 7
 
 # install vuls
 go get github.com/future-architect/vuls
 
 cd /root/vuls
-
-# Fetch vulnerability data from NVD.
-#go-cve-dictionary fetchjvn -entire
-#go-cve-dictionary fetchjvn -month
-go-cve-dictionary fetchjvn -week
 
 # Setting up target servers for Vuls
 vuls prepare
@@ -38,4 +41,3 @@ vuls prepare
 
 # TUI
 #vuls tui
-

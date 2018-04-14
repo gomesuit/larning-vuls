@@ -1,12 +1,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-VAGRANTFILE_API_VERSION = "2"
-
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
-
-  config.vm.box = "centos/7"
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/centos-7.3"
 
   config.vm.define :server do |host|
     _HOSTNAME = "server"
@@ -19,5 +15,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     host.vm.provision :shell, path: "install-golang.sh"
     host.vm.provision :shell, path: "install-vuls.sh"
   end
-
 end
