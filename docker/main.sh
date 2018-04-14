@@ -1,5 +1,14 @@
 #!/bin/bash -ex
 
+vagrant up
+
+SSH_CONFIG=$(vagrant ssh-config)
+cat config.sample.toml | \
+  sed "s/HOST/$(echo "$SSH_CONFIG" | grep HostName | awk '{print $2}')/g" | \
+  sed "s/PORT/$(echo "$SSH_CONFIG" | grep Port | awk '{print $2}')/g" | \
+  sed "s/USER/$(echo "$SSH_CONFIG" | grep 'User ' | awk '{print $2}')/g" \
+  > config.toml
+
 # Pull new vuls docker images
 docker pull vuls/go-cve-dictionary
 docker pull vuls/vuls
@@ -42,6 +51,7 @@ docker run --rm \
 # scan
 docker run --rm \
   -v ~/.ssh:/root/.ssh:ro \
+  -v $(echo "$SSH_CONFIG" | grep IdentityFile | awk '{print $2}'):/root/.ssh/private_key:ro \
   -v $PWD/work:/vuls \
   -v $PWD/work/vuls-log:/var/log/vuls \
   -v $PWD/config.toml:/vuls/config.toml \
@@ -54,6 +64,7 @@ docker run --rm \
 # report
 docker run --rm \
   -v ~/.ssh:/root/.ssh:ro \
+  -v $(echo "$SSH_CONFIG" | grep IdentityFile | awk '{print $2}'):/root/.ssh/private_key:ro \
   -v $PWD/work:/vuls \
   -v $PWD/work/vuls-log:/var/log/vuls \
   -v $PWD/config.toml:/vuls/config.toml \
