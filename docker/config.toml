@@ -7,7 +7,7 @@ notifyUsers  = ["@here"]
 
 [servers]
 
-[servers.amazon]
+[servers.sample]
 host         = "xxx.xxx.xxx.xxx"
 user         = "centos"
 keyPath      = "/root/.ssh/xxxxx.pem"
