@@ -1,0 +1,13 @@
+[slack]
+hookURL      = "https://hooks.slack.com/services/XXXXXXXXX/XXXXXXX/XXXXXXXXXXXXXXXXX"
+channel      = "#vuls"
+iconEmoji    = ":ghost:"
+authUser     = "vuls"
+notifyUsers  = ["@here"]
+
+[servers]
+
+[servers.amazon]
+host         = "xxx.xxx.xxx.xxx"
+user         = "centos"
+keyPath      = "/root/.ssh/xxxxx.pem"
