@@ -8,6 +8,7 @@ notifyUsers  = ["@here"]
 [servers]
 
 [servers.sample]
-host         = "xxx.xxx.xxx.xxx"
-user         = "centos"
-keyPath      = "/root/.ssh/xxxxx.pem"
+host         = "HOST"
+port         = "PORT"
+user         = "USER"
+keyPath      = "KEY_PATH"
